@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace GreedKata
@@ -6,29 +7,39 @@ namespace GreedKata
     [TestFixture]
     public class CalculatorTests
     {
+        IScoreCalculator _greedDiceCalc;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _greedDiceCalc = new GreedDiceCalc();
+        }
         [Test]
         public void Single_5_and_no_other_scores_returns_50()
         {
-            IScoreCalculator greedDiceCalc =  new GreedDiceCalc();
-            var score = greedDiceCalc.CalculateScore(new[]{2,3,4,6,5});
+            var score = _greedDiceCalc.CalculateScore(new[]{2,3,4,6,5});
             Assert.That(score, Is.EqualTo(50));
         }
 
         [Test]
         public void Single_1_and_no_other_scores_returns_100()
         {
-            IScoreCalculator greedDiceCalc = new GreedDiceCalc();
-            var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 1 });
-            Assert.That(score, Is.EqualTo(100));
-                       
+            var score = _greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 1 });
+            Assert.That(score, Is.EqualTo(100));              
         }
 
         [Test]
         public void No_scoring_dice()
         {
-            IScoreCalculator greedDiceCalc = new GreedDiceCalc();
-            var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 6 });
+            var score = _greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 6 });
             Assert.That(score, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Double_1_scores_200()
+        {
+            var score = _greedDiceCalc.CalculateScore(new[] { 1, 3, 1, 6, 6 });
+            Assert.That(score, Is.EqualTo(200));
         }
     
     }
@@ -37,16 +48,19 @@ namespace GreedKata
     {
         public int CalculateScore(int[] lastDiceRoll)
         {
-            if (ScoringRoll(lastDiceRoll, 5))
-                return 50;
-            if (ScoringRoll(lastDiceRoll, 1))
-                return 100;
+            var num_1s = ScoringDice(lastDiceRoll, 1);
+            var num_5s = ScoringDice(lastDiceRoll, 5);
+            if (num_5s > 0)
+                return 50*num_5s;
+            if (num_1s >0 )
+                return 100*num_1s;
             return 0;
         }
 
-        static bool ScoringRoll(int[] lastDiceRoll, int scoringDice)
+        static int ScoringDice(int[] lastDiceRoll, int scoringDice)
         {
-            return Array.Exists(lastDiceRoll,x => x == scoringDice);
+            int[] findAll = Array.FindAll(lastDiceRoll, x => x == scoringDice);
+            return findAll.Length;
         }
     }
 }
