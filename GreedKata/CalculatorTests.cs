@@ -20,19 +20,33 @@ namespace GreedKata
             IScoreCalculator greedDiceCalc = new GreedDiceCalc();
             var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 1 });
             Assert.That(score, Is.EqualTo(100));
-            
-            
+                       
         }
 
-        
-
+        [Test]
+        public void No_scoring_dice()
+        {
+            IScoreCalculator greedDiceCalc = new GreedDiceCalc();
+            var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 6 });
+            Assert.That(score, Is.EqualTo(0));
+        }
+    
     }
 
     public class GreedDiceCalc : IScoreCalculator
     {
         public int CalculateScore(int[] lastDiceRoll)
         {
-            return Array.Exists(lastDiceRoll,x => x == 5) ? 50 : 100;
+            if (ScoringRoll(lastDiceRoll, 5))
+                return 50;
+            if (ScoringRoll(lastDiceRoll, 1))
+                return 100;
+            return 0;
+        }
+
+        static bool ScoringRoll(int[] lastDiceRoll, int scoringDice)
+        {
+            return Array.Exists(lastDiceRoll,x => x == scoringDice);
         }
     }
 }

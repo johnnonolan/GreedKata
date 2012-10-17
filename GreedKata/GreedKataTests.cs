@@ -6,7 +6,7 @@ namespace GreedKata
     public class GreedKataTests : IRoller, IScoreCalculator
     {
         [Test]
-        public void When_throwing_a_single_five_you_score_50()
+        public void When_throwing_a_single_five_you_score_50() //nb this is crap. I've faked everthing what is the value of this
         {
             
             var game = new Game(this, this);
