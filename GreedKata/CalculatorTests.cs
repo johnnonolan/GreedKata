@@ -10,8 +10,17 @@ namespace GreedKata
         {
             IScoreCalculator greedDiceCalc =  new GreedDiceCalc();
             var score = greedDiceCalc.CalculateScore(new[]{2,3,4,6,5});
-            Assert.That(score, Is.EqualTo(score));
+            Assert.That(score, Is.EqualTo(50));
         }
+
+        [Test]
+        public void Single_1_and_no_other_scores_returns_100()
+        {
+            IScoreCalculator greedDiceCalc = new GreedDiceCalc();
+            var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 1 });
+            Assert.That(score, Is.EqualTo(100));
+        }
+
     }
 
     public class GreedDiceCalc : IScoreCalculator
