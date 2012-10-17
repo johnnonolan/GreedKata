@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace GreedKata
 {
@@ -19,7 +20,11 @@ namespace GreedKata
             IScoreCalculator greedDiceCalc = new GreedDiceCalc();
             var score = greedDiceCalc.CalculateScore(new[] { 2, 3, 4, 6, 1 });
             Assert.That(score, Is.EqualTo(100));
+            
+            
         }
+
+        
 
     }
 
@@ -27,7 +32,7 @@ namespace GreedKata
     {
         public int CalculateScore(int[] lastDiceRoll)
         {
-            return 50;
+            return Array.Exists(lastDiceRoll,x => x == 5) ? 50 : 100;
         }
     }
 }
