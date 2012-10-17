@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculatorTests.cs" />
     <Compile Include="GreedKataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvidedExamples.cs" />

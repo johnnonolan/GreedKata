@@ -10,7 +10,7 @@ namespace GreedKata
         {
             
             var game = new Game(this, this);
-            game.throwDice();
+            game.ThrowDice();
             var score = game.Score();
             Assert.That(score ,Is.EqualTo(50));
         }
@@ -20,7 +20,7 @@ namespace GreedKata
             return new[] {2, 3, 4, 6, 5};
         }
 
-        public int CalculateScore()
+        public int CalculateScore(int[] lastDiceRoll)
         {
             return 50;
         }
@@ -28,7 +28,7 @@ namespace GreedKata
 
     public interface IScoreCalculator
     {
-        int CalculateScore();
+        int CalculateScore(int[] lastDiceRoll);
     }
 
     public interface IRoller
@@ -40,6 +40,7 @@ namespace GreedKata
     {
         readonly IRoller _roller;
         readonly IScoreCalculator _scoreCalculator;
+        int[] _lastDiceRoll;
 
         public Game(IRoller roller, IScoreCalculator scoreCalculator)
         {
@@ -49,12 +50,12 @@ namespace GreedKata
 
         public int Score()
         {
-            return _scoreCalculator.CalculateScore();
+            return _scoreCalculator.CalculateScore(_lastDiceRoll);
         }
 
-        public void throwDice()
+        public void ThrowDice()
         {
-            var dice = _roller.Roll();
+            _lastDiceRoll = _roller.Roll();
         }
     }
 }

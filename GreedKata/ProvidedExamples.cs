@@ -13,7 +13,7 @@ namespace GreedKata
             var fakeRoller = new FakeRoller();
             fakeRoller.FakeRoll = () => new[] {1, 1, 1, 5, 1};
             var game = new Game(fakeRoller, this);
-            game.throwDice();
+            game.ThrowDice();
             Assert.That(game.Score(),Is.EqualTo(1150));
             fakeRoller.FakeRoll = () => new[] { 2, 3, 4, 6, 2 };
             Assert.That(game.Score(), Is.EqualTo(0));
@@ -26,7 +26,7 @@ namespace GreedKata
 
         }
 
-        public int CalculateScore()
+        public int CalculateScore(int[] lastDiceRoll)
         {
             //Note this has not been created and we are using SS
             throw new NotImplementedException();
