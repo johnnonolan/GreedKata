@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace GreedKata
@@ -11,7 +13,12 @@ namespace GreedKata
         [SetUp]
         public void SetUp()
         {
-            _greedDiceCalc = new GreedDiceCalc();
+            var scoringRules = new List<ScoringRule>
+                                   {
+                                       new ScoringRule {DiceFace = 1, SingleScore = 100},
+                                       new ScoringRule {DiceFace = 5, SingleScore = 50}
+                                   };
+            _greedDiceCalc = new GreedDiceCalc(scoringRules);
         }
         [Test]
         public void Single_5_and_no_other_scores_returns_50()
@@ -53,23 +60,28 @@ namespace GreedKata
 
     public class GreedDiceCalc : IScoreCalculator
     {
+        readonly IEnumerable<ScoringRule> _scoringRules;
+
+        public GreedDiceCalc(IEnumerable<ScoringRule> scoringRules)
+        {
+            _scoringRules = scoringRules;
+        }
+
         public int CalculateScore(int[] lastDiceRoll)
         {
-            var score = 0;
-            var num_1s = ScoringDice(lastDiceRoll, 1);
-            var num_5s = ScoringDice(lastDiceRoll, 5);
-            //duplication
-            if (num_5s > 0)
-                score += 50*num_5s;
-            if (num_1s >0 )
-                score+= 100*num_1s;
-            return score;
+            return _scoringRules.Sum(scoringRule => ScoringDice(lastDiceRoll, scoringRule.DiceFace)*scoringRule.SingleScore);
         }
 
         static int ScoringDice(int[] lastDiceRoll, int scoringDice)
         {
-            int[] findAll = Array.FindAll(lastDiceRoll, x => x == scoringDice);
+            var findAll = Array.FindAll(lastDiceRoll, x => x == scoringDice);
             return findAll.Length;
         }
+    }
+
+    public class ScoringRule
+    {
+        public int DiceFace { get; set; }
+        public int SingleScore { get; set; }
     }
 }
