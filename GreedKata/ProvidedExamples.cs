@@ -6,12 +6,7 @@ namespace GreedKata
     [TestFixture]
     public class ProvidedExamples : IScoreCalculator 
     {
-//        Examples
-//• [1,1,1,5,1] = 1150 points
-//• [2,3,4,6,2] = 0 points
-//• [3,4,5,3,3] = 350 points
-//• [1,5,1,2,4] = 250 points
-//• [5,5,5,5,5] = 600 points
+
         [Test]
         public void AreExamplesSatisfied()
         {
@@ -43,7 +38,7 @@ namespace GreedKata
 
         public delegate int[] RollFaker();
 
-        public RollFaker FakeRoll = () => new int[5];
+        public RollFaker FakeRoll;
 
         public int[] Roll()
         {
