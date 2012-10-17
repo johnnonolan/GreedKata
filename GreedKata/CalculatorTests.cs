@@ -15,8 +15,8 @@ namespace GreedKata
         {
             var scoringRules = new List<ScoringRule>
                                    {
-                                       new ScoringRule {DiceFace = 1, SingleScore = 100},
-                                       new ScoringRule {DiceFace = 5, SingleScore = 50}
+                                       new ScoringRule {DieFace = 1, SingleScore = 100, TripleScore = 1000},
+                                       new ScoringRule {DieFace = 5, SingleScore = 50, TripleScore = 500}
                                    };
             _greedDiceCalc = new GreedDiceCalc(scoringRules);
         }
@@ -53,6 +53,13 @@ namespace GreedKata
         {
             var score = _greedDiceCalc.CalculateScore(new[] { 2, 3, 5, 1, 5 });
             Assert.That(score, Is.EqualTo(200));
+        }
+
+        [Test]
+        public void Triple_1_scores_1000()
+        {
+            var score = _greedDiceCalc.CalculateScore(new[] { 1, 3, 1, 1, 6 });
+            Assert.That(score, Is.EqualTo(1000));
             
         }
     
@@ -69,7 +76,9 @@ namespace GreedKata
 
         public int CalculateScore(int[] lastDiceRoll)
         {
-            return _scoringRules.Sum(scoringRule => ScoringDice(lastDiceRoll, scoringRule.DiceFace)*scoringRule.SingleScore);
+            return (from scoringRule in _scoringRules
+                    let scoringDice = ScoringDice(lastDiceRoll, scoringRule.DieFace)
+                    select scoringDice >= 3 ? scoringRule.TripleScore + (scoringRule.SingleScore*(scoringDice - 3)) : scoringRule.SingleScore*scoringDice).Sum();
         }
 
         static int ScoringDice(int[] lastDiceRoll, int scoringDice)
@@ -81,7 +90,8 @@ namespace GreedKata
 
     public class ScoringRule
     {
-        public int DiceFace { get; set; }
+        public int DieFace { get; set; }
         public int SingleScore { get; set; }
+        public int TripleScore { get; set; }
     }
 }
