@@ -12,9 +12,9 @@
             _scoreCalculator = scoreCalculator;
         }
 
-        public int Score()
+        public void Score()
         {
-            return _scoreCalculator.CalculateScore(_lastDiceRoll);
+            _scoreCalculator.CalculateScore(_lastDiceRoll);
         }
 
         public void ThrowDice()

@@ -2,6 +2,6 @@
 {
     public interface IScoreCalculator
     {
-        int CalculateScore(int[] lastDiceRoll);
+        void CalculateScore(int[] lastDiceRoll);
     }
 }

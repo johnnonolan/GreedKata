@@ -1,11 +1,13 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace GreedKata
 {
     [TestFixture]
-    public class ProvidedExamples 
+    public class ProvidedExamples : IDisplay
     {
+        int _score;
 
         [Test]
         public void AreExamplesSatisfied()
@@ -19,25 +21,36 @@ namespace GreedKata
                                        new ScoringRule {DieFace = 5, SingleScore = 50, TripleScore = 500},
                                        new ScoringRule {DieFace = 6, SingleScore = 0, TripleScore = 600}
                                    };
-            var calc = new GreedDiceCalc(scorerules);
+            var calc = new GreedDiceCalc(scorerules,this);
             var fakeRoller = new FakeRoller();
             fakeRoller.FakeRoll = () => new[] {1, 1, 1, 5, 1};
             var game = new Game(fakeRoller, calc);
             game.ThrowDice();
-            Assert.That(game.Score(),Is.EqualTo(1150));
+            game.Score();
+            Assert.That(_score,Is.EqualTo(1150));
             fakeRoller.FakeRoll = () => new[] { 2, 3, 4, 6, 2 };
             game.ThrowDice();
-            Assert.That(game.Score(), Is.EqualTo(0));
+            game.Score();
+            Assert.That(_score, Is.EqualTo(0));
             fakeRoller.FakeRoll = () => new[] { 3, 4, 5, 3, 3 };
             game.ThrowDice();
-            Assert.That(game.Score(), Is.EqualTo(350));
+            game.Score();
+            Assert.That(_score, Is.EqualTo(350));
             fakeRoller.FakeRoll = () => new[] { 1, 5, 1, 2, 4 };
             game.ThrowDice();
-            Assert.That(game.Score(), Is.EqualTo(250));
+            game.Score();
+            Assert.That(_score, Is.EqualTo(250));
             game.ThrowDice();
+            game.Score();
             fakeRoller.FakeRoll = () => new[] { 5, 5, 5, 5, 5 };
             game.ThrowDice();
-            Assert.That(game.Score(), Is.EqualTo(600));
+            game.Score();
+            Assert.That(_score, Is.EqualTo(600));
+        }
+
+        public void Display(int score)
+        {
+            _score = score;
         }
     }
 
