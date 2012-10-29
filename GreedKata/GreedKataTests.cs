@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Greed.Core;
 using NUnit.Framework;
 
 namespace GreedKata
@@ -6,16 +6,14 @@ namespace GreedKata
     [TestFixture]
     public class GreedKataTests : IRoller, IScoreCalculator, IDisplay
     {
-        int _condition;
+        int _score;
 
         [Test]
         public void When_throwing_a_single_five_you_score_50() //nb this is crap. I've faked everthing what is the value of this?
-        {
-            
+        {            
             var game = new Game(this, this);
             game.ThrowDice();
-            game.Score();
-            Assert.That(_condition ,Is.EqualTo(50));
+            Assert.That(_score ,Is.EqualTo(50));
         }
 
         public int[] Roll()
@@ -30,12 +28,7 @@ namespace GreedKata
 
         public void Display(int score)
         {
-            _condition = score;
+            _score = score;
         }
-    }
-
-    public interface IDisplay
-    {
-        void Display(int score);
     }
 }

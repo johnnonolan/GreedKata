@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{25F0F1C8-D491-421E-906E-9E4E0191DA35}</ProjectGuid>
+    <ProjectGuid>{5785B1B8-E40C-4567-A0DA-7EBB5A28BB55}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GreedKata</RootNamespace>
-    <AssemblyName>GreedKata</AssemblyName>
+    <RootNamespace>Greed.Core</RootNamespace>
+    <AssemblyName>Greed.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,19 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculatorTests.cs" />
-    <Compile Include="GreedKataTests.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GreedDiceCalc.cs" />
+    <Compile Include="IDisplay.cs" />
+    <Compile Include="IRoller.cs" />
+    <Compile Include="IScoreCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProvidedExamples.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Greed.Core\Greed.Core.csproj">
-      <Project>{5785B1B8-E40C-4567-A0DA-7EBB5A28BB55}</Project>
-      <Name>Greed.Core</Name>
-    </ProjectReference>
+    <Compile Include="ScoringRule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

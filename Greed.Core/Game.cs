@@ -1,10 +1,9 @@
-﻿namespace GreedKata
+namespace Greed.Core
 {
     public class Game
     {
         readonly IRoller _roller;
         readonly IScoreCalculator _scoreCalculator;
-        int[] _lastDiceRoll;
 
         public Game(IRoller roller, IScoreCalculator scoreCalculator)
         {
@@ -12,14 +11,9 @@
             _scoreCalculator = scoreCalculator;
         }
 
-        public void Score()
-        {
-            _scoreCalculator.CalculateScore(_lastDiceRoll);
-        }
-
         public void ThrowDice()
-        {
-            _lastDiceRoll = _roller.Roll();
+        {            
+            _scoreCalculator.CalculateScore(_roller.Roll());
         }
     }
 }

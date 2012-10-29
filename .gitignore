@@ -6,4 +6,5 @@ _ReSharper.*
 *.user
 _NCRUNCH*
 *.ncrunchproject
+*.cache
 

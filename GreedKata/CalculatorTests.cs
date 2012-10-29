@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Greed.Core;
 using NUnit.Framework;
 
 namespace GreedKata
@@ -59,8 +59,7 @@ namespace GreedKata
         public void Triple_1_scores_1000()
         {
             _greedDiceCalc.CalculateScore(new[] { 1, 3, 1, 1, 6 });
-            Assert.That(_score, Is.EqualTo(1000));
-            
+            Assert.That(_score, Is.EqualTo(1000));            
         }
 
         public void Display(int score)

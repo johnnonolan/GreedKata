@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GreedKata
+namespace Greed.Core
 {
     public class GreedDiceCalc : IScoreCalculator
     {
@@ -17,7 +17,7 @@ namespace GreedKata
 
         public void CalculateScore(int[] lastDiceRoll)
         {
-            int calculateScore = (from scoringRule in _scoringRules
+            var calculateScore = (from scoringRule in _scoringRules
                                   let scoringDice = ScoringDice(lastDiceRoll, scoringRule.DieFace)
                                   select scoringDice >= 3 ? scoringRule.TripleScore + (scoringRule.SingleScore*(scoringDice - 3)) : scoringRule.SingleScore*scoringDice).Sum();
             _display.Display( calculateScore);

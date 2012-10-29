@@ -1,4 +1,4 @@
-﻿namespace GreedKata
+namespace Greed.Core
 {
     public interface IRoller
     {
